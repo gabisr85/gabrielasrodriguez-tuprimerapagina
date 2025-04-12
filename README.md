@@ -1,0 +1,1 @@
+# Guia para un proyecto django
