@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <a href={% url "inicio" %}>Inicio</a>
+        <a href={% url "agregar_producto" %}>Agregar producto</a>
+        <a href={% url "listado_productos" %}>Listado de productos</a>
+    </nav>
+    <h1>Agregar producto</h1>
+    <form action="{% url "agregar_producto" %}" method="POST">
+        {% csrf_token %}
+        {{formulario}}
+        <input type="submit" value="Guardar">
+    
+    </form> 
+</body>
+</html>
