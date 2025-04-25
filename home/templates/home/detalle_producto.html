@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+    <h1>{{producto}}</h1>
+    <p>Marca: {{producto.marca}}</p>
+    <p>Codigo: {{producto.codigo}}</p>
+    <p>Fecha: {{producto.fecha_carga}}</p>
+{% endblock contenido %}

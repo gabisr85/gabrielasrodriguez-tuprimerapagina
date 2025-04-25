@@ -1,29 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <nav>
-        <a href={% url "inicio" %}>Inicio</a>
-        <a href={% url "agregar_producto" %}>Agregar producto</a>
-        <a href={% url "listado_productos" %}>Listado de productos</a>
-    </nav>
-    <h1>Listado de productos</h1>
+{% extends "base.html" %}
 
+{% block contenido %}
+    <h1>Listado de productos</h1>
+    <P>
+        <a href={% url "agregar_producto" %}>Agregar producto</a>
+    </P>
     {% if productos %}
     <ul>
         {% for producto in productos %}
         <li>
-            {{producto}}
+            {{producto}} 
+            | <a href={% url "detalle_producto" producto.id %}>Ver mas</a>
+            | <a href={% url "modificar_producto" producto.id %}>Modificar</a>
+            | <a href={% url "eliminar_producto" producto.id %}>Eliminar</a>
         </li>
         {% endfor %}
     </ul>
     {% else %}
     <p>No hay datos para mostrar</p>
-    {% endif %}    
- 
-</body>
-</html>
+    {% endif %}  
+{% endblock contenido %}  
