@@ -39,6 +39,8 @@ def editar_perfil(request):
     if request.method == "POST":
         formulario = FormularioEditarPerfil(request.POST, request.FILES, instance=request.user)
         if formulario.is_valid():
+            infoextra.sports = formulario.cleaned_data.get('sports')
+            infoextra.hobbies = formulario.cleaned_data.get('hobbies')
 
             if formulario.cleaned_data.get('avatar'):
                 infoextra.avatar = formulario.cleaned_data.get('avatar')
@@ -49,6 +51,6 @@ def editar_perfil(request):
 
             return redirect("login")
     else:
-        formulario = FormularioEditarPerfil(initial={'avatar' : infoextra.avatar}, instance=request.user)
+        formulario = FormularioEditarPerfil(initial={'sports' : infoextra.sports, 'hobbies' : infoextra.hobbies, 'avatar' : infoextra.avatar}, instance=request.user)
         
     return render(request, "usuarios/editar_perfil.html", {'formulario' : formulario})
