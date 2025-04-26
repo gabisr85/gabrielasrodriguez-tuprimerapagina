@@ -4,11 +4,14 @@ from home.forms import CreacionProducto
 from home.models import Producto
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
-from django.urls import reverse_lazy 
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 def inicio(request):
     return render(request, 'home/inicio.html')
 
+@login_required
 def agregar_producto(request):
     print("Estos son los datos del GET", request.GET)
     print("Estos son los datos del POST", request.POST)
@@ -36,13 +39,13 @@ class VistaDetalleProducto(DetailView):
     model = Producto
     template_name = 'home/detalle_producto.html'
 
-class VistaModificarProducto(UpdateView):
+class VistaModificarProducto(LoginRequiredMixin, UpdateView):
     model = Producto
     template_name = 'home/modificar_producto.html'
     fields = ["tipo_de_producto", "marca", "codigo"]
     success_url = reverse_lazy('listado_productos')
 
-class VistaEliminarProducto(DeleteView):
+class VistaEliminarProducto(LoginRequiredMixin, DeleteView):
     model = Producto
     template_name = 'home/eliminar_producto.html'
     success_url = reverse_lazy('listado_productos') 
