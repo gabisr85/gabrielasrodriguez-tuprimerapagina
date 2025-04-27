@@ -33,3 +33,57 @@ hacemos Ctrl+"clic" en http://127.0.0.1:8000/ y me abre el navegador del proyect
 - git add .
 - git commit -m 'informacion'
 - git push
+
+# ENTREGA FINAL
+27. importante: cuando tenemos creada una clase en modelo.py, por cada modificacion se debe realizar un migrate
+28. cuando creamos un campo fecha en models, es recomendable que pueda estar vacio por si hay datos previos <models.DateField(null=True)>. En forms realizamos las modificaciones necesarias como un <wigdet> para que podamos seleccionar la fecha y en views indicamos el campo fecha.
+29. creamos un superusuario "admin" <python manage.py createsuperuser> que sera el administrador que vera toda la informacion de la pagina. en el archivo admin.py le pedimos que regstre el modelo de nuestra app para poder ver un modificar informacion.
+30. modificaciones CRUD: lectura,modificacion y borrado del objeto creado. primero en la URL creamos el acceso, a que vista lleva los datos, y el campo variable que traiga el identificador (como es un valor numerico indicamos el int). en views definimos esa vista pidiendo que los datos se obtengan por el id, y retornar al template nuevo (que vamos a crear). en dicho template agregar un ancla que utiliza info de la url.
+31. si la vista la definimos como clase hay que importar la vista a heredar, indicamos el modelo a utilizar y el template. En la url lleva datos diferentes a una <def>como un <pk> para identificador. el modelo es la variable que utilizara el template. (dato: variable plural indica el camino desde el listado)
+32. cuando cramos una clase de edicion se utiliza un formulario, el atriburo succes_url indica a donde va la info que se edito. Se indica como "form".
+33. Herencia de templates: se crea uno base en la carpeta template a la altura del proyecto y con <{% block contenido %}{% endblock contenido %}> indico que es lo que quiero que agregue, este tiene las anclas de navegacion. en los otros templates extiendo con {% extend base.html %}.
+34. creamos una aplicacion <python manage.py startapp usuarios> para login y logut (realizamos las conexiones al crear app)
+35. seguimos los pasos de creacion de app: url con sus import como login y logut. Views, definimos <def> login y <class> logout. creamos el template: <template/usuarios>.
+36. LOGIN: al ser formulario de autenticacion en views importamos <AuthenticationForm(request, data=request.POST)> que valida si un usuario existe. importamos <login as django_login> permite que el usuartio quede conectado. url import <login>.
+37. LOGOUT: en url import <LogoutView> porque es una clase basada en vistas. ene l path indicamos el template logout. En el template base agregamos un boton armamos un formulario de seguridad <csrf_token>
+38. REGISTRO: determinar url import <registro>. creamos en views <def registro> utilizando formulario, importamos <UserCreationForm>. Creamos template. agregamos el ancla en el base.
+39. en REGISTRO, el formulario modelform, permite guardar los datos <formulario.save()>
+40. para modificar el formato por defecto, creamos un formulario <FormularioModificarRegistro>. Este se crea en <forms.py>, importamos <UserCreationForm> entonces <FormularioModificarRegistro(UserCreationForm)>
+41. creamos una subclase <class Meta> para poder cambiar informacion que no tiene el formulario que se hereda de model form. Aqui usamos el models <User>, lo importamos (para cambiar por ejemplo los textos de ayuda o dejarlos vacios)
+42. para limitar que un usuario pueda hacer modificaciones debo asegurar que este logueado. Se utiliza el clase MIXINS. En views se importa <LoginRequiredMixin> (lo indicamos en la clase como primera herencia)
+* en el Setting indicamos <LOGIN_URL = "/usuarios/login/"> para que cuando no estoy logueado y quiero modificar algo, me lleve al login.
+43. DECORADOR permite englobar funcionalidades. import <login_required> y se indica antes de la funcion <@loguin_required>
+44. crear Edicion de usuario: en views <UserChangeForm> y lo importamos. determinamos la url y lo indicamos en template base. Creamos el template editar_usuario
+45. creadmos <FormularioEdicionPerfil> en forms para cambiar el formato. al igual que modificar perfil, creamos la subclase <class Meta> lo importamos en vista
+* le indicamos al formulario <FormularioEdicionPerfil(instance=requets.user)>, se lo agregamos a todos los formularios de la clase, instance=requets.user
+46. AVATAR. a un modelo se le agrega el campo imagen, se importa libreria, se editan los formularios, la informacion que se les pasa a los formulario n las vistas y en los termplates se agrega en las etiquetes form para que acepte trabajar con imagenes
+47. en models.py creamos un modelo aparte sobre impormacion extra al model User. importamso y creamos una clase <Infoextra(models.Model)>
+48. el campo extra en este caso es AVATAR pero para trabajar con imagenes enecesito instalar pip instal pillow, actualizar requeriments y migramos
+49. agregamos el campo de imagen en editar perfil, se modifica el modelo agregando el campo. para que reconoza imagenes un formulario se debe agregar <regest.FILES>
+* indico al fomulario que guarde la informacion del InfoExtra relacionandolo con el Usuario
+49. en el tempalate de editar perfil pasar <enctype="multipart/fomr-data"> 
+50. IMPORTANTE: en settings agregar MEDIA_URL = /media/". primero import os luego MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+51. en url del proyecto agrego al final <+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)> e importamos settings
+52. IMPORTANTE: cuando un usuario se loguea, se le cree un user y un infoextra.
+* en vista importamos el modelo InfoExtra y en el mismo login agregamos <InfoExtra.objects.get_or_create(user=usuario)>
+* para mostar la imagen en editar perfil, indicar formulario de editar perfil un <initial={ 'avatar' : infoextra.avatar },>
+# 53 Agregar campo en Usuarios
+* se crearon dos campos: Sports y Hobbies
+* los agregamos en forms.py
+* en models.py en el Infoextra ya que el modelo User no los incluye
+* agrego tambien en views.py en el formulario editar perfil
+# 54 Agregar imagen en productos
+* agregar en el template base al ancla de listado de porductos la imagen
+* en forms importar Models y Producto, y agrego la imagen en clase y subclase
+* models agregar la imagen con los armugentos para subir imagen y que pueda estar vacia)
+* template en  agregar_producto indicar request.FILES, en clase Modificar Producto agregar la imagen
+* se agrega en los templates eliminar y y modificar agrego enctype="multipart/form-data", en detalle producto el en campo imagen
+# 55 Crear Perfil
+* en views.py creo un def perfil_usuario teniendo en cuenta los datos de infoextra y los datos del modelo user. agrego @loguin_required
+* en url y definimos el path
+* creamos el template, tambien tenemos en cuenta los atriburos de user y info_extra. En infoextra indicamos mensaje si esta vacio.
+* incorporamos en el template base el ancla d perfil
+# 56 Start Bootstrap
+* descargamos plantilla de html. se crea una carpeta llamada Static
+* copiamos la info de html y la pegamos en nuestro templante Base y modificamos para incorporar nuestros codigos con la estetica del bootstrap
+57. para finalizar realizamos el git push
