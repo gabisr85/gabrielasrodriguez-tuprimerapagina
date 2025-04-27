@@ -1,9 +1,9 @@
 from django.db import models
 
 class Producto(models.Model):
-    tipo_de_producto = models.CharField(max_length=20)
-    marca = models.CharField(max_length=20)
-    codigo = models.CharField(max_length=20)
+    tipo_de_producto = models.CharField(max_length=50)
+    marca = models.CharField(max_length=50)
+    codigo = models.CharField(max_length=50)
     fecha_carga = models.DateField(null=True)
     imagen = models.ImageField(upload_to="productos/", null=True, blank=True)  
 
