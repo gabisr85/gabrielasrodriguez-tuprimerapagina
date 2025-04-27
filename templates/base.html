@@ -18,6 +18,7 @@
             {% endif %}         
             {{request.user.username}}
         </a>
+        <a href="{% url 'perfil_usuario' %}">Mi Perfil</a>
         <form action={% url "logout" %} method="post">
             {% csrf_token %}
             <input type="submit" value="Logout">

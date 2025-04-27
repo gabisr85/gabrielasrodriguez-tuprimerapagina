@@ -5,6 +5,7 @@ from usuarios.forms import FormularioRegistro, FormularioEditarPerfil
 from django.contrib.auth.decorators import login_required
 from usuarios.models import InfoExtra
 
+
 def login(request):
     if request.method== "POST":
         formulario = AuthenticationForm(request, data=request.POST)
@@ -54,3 +55,9 @@ def editar_perfil(request):
         formulario = FormularioEditarPerfil(initial={'sports' : infoextra.sports, 'hobbies' : infoextra.hobbies, 'avatar' : infoextra.avatar}, instance=request.user)
         
     return render(request, "usuarios/editar_perfil.html", {'formulario' : formulario})
+
+@login_required
+def perfil_usuario(request):
+    info_extra  = request.user.infoextra
+    context = {'usuario' : request.user, 'info_extra' : info_extra}
+    return render(request, "usuarios/perfil.html", context)
