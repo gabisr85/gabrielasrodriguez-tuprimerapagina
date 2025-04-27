@@ -16,7 +16,7 @@ def agregar_producto(request):
     print("Estos son los datos del GET", request.GET)
     print("Estos son los datos del POST", request.POST)
     if request.method == "POST":
-        formulario = CreacionProducto(request.POST)
+        formulario = CreacionProducto(request.POST, request.FILES)
         if formulario.is_valid():
             info = formulario.cleaned_data
             producto = Producto(tipo_de_producto=info.get('tipo_de_producto'), marca=info.get('marca'), codigo=info.get('codigo'), fecha_carga=info.get('fecha_carga'))
@@ -38,11 +38,11 @@ def detalle_producto(request, producto_especifico):
 class VistaDetalleProducto(DetailView):
     model = Producto
     template_name = 'home/detalle_producto.html'
-
+    
 class VistaModificarProducto(LoginRequiredMixin, UpdateView):
     model = Producto
     template_name = 'home/modificar_producto.html'
-    fields = ["tipo_de_producto", "marca", "codigo"]
+    fields = ["tipo_de_producto", "marca", "codigo", "imagen"]
     success_url = reverse_lazy('listado_productos')
 
 class VistaEliminarProducto(LoginRequiredMixin, DeleteView):

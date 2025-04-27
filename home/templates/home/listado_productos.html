@@ -9,7 +9,12 @@
     <ul>
         {% for producto in productos %}
         <li>
-            {{producto}} 
+            {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" alt="Imagen de {{ producto }}" height="80px" >
+            {% else %}
+            <p>Sin imagen disponible</p>
+            {% endif %}
+            {{ producto.tipo_de_producto }} - {{ producto.marca }} - {{ producto.codigo }} 
             | <a href={% url "detalle_producto" producto.id %}>Ver mas</a>
             | <a href={% url "modificar_producto" producto.id %}>Modificar</a>
             | <a href={% url "eliminar_producto" producto.id %}>Eliminar</a>
@@ -19,4 +24,4 @@
     {% else %}
     <p>No hay datos para mostrar</p>
     {% endif %}  
-{% endblock contenido %}  
+{% endblock contenido %}

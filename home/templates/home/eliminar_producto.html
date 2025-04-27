@@ -2,7 +2,7 @@
 
 {% block contenido %}
     <h1>Eliminar {{producto}}</h1>
-    <form action="{% url "eliminar_producto" producto.id %}" method="POST">        
+    <form action="{% url "eliminar_producto" producto.id %}" method="POST" enctype="multipart/form-data">        
         {% csrf_token %}
         <p>¿Desea eliminar el producto?</p>
         <input type="submit" value="Confirmar">

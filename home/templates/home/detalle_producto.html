@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block contenido %}
-    <h1>{{producto}}</h1>
+    <h1>{{ producto.tipo_de_producto }} - {{ producto.marca }} - {{ producto.codigo }}</h1>
     <p>Marca: {{producto.marca}}</p>
     <p>Codigo: {{producto.codigo}}</p>
-    <p>Fecha: {{producto.fecha_carga}}</p>
+    <p>Fecha: {{producto.fecha_carga}}</p>    
 {% endblock contenido %}
