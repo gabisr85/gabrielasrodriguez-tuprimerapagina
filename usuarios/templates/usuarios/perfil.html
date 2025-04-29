@@ -8,11 +8,16 @@
     <p>Email: {{ usuario.email }}</p>
     <h2>Un poco mas sobre mi</h2>
     {% if info_extra %}        
-        <p>Deportes: {{ info_extra.sports|default:"No especificado" }}</p>
-        <p>Hobbies: {{ info_extra.hobbies|default:"No especificado" }}</p>
+        <p>Deportes: {{ info_extra.sports|default:"Sin informacion" }}</p>
+        <p>Hobbies: {{ info_extra.hobbies|default:"Sin informacion" }}</p>
     {% else %}
         <p>Sin información adicional al perfil</p>
     {% endif %}
-
+    <h3>Mi foto</h3>
+    {% if info_extra and info_extra.avatar %}
+        <img src="{{ info_extra.avatar.url }}" alt="Avatar de {{ usuario.username }}" height="80px">
+    {% else %}
+        <p>Sin imagen</p>
+    {% endif %}       
     <a href="{% url 'editar_perfil' %}">Editar Perfil</a>
 {% endblock contenido %}
